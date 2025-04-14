@@ -14,7 +14,7 @@ app.use(cookie_parser());
 //Routes
 app.use("/api/auth", require("./Routers/auth.routes"));
 // Middleware to protect all routes after this line
-app.use(checkUser);
+app.use("*",checkUser);
 app.use("/api/users", require("./Routers/user.routes"));
 app.use("/api/products", require("./Routers/product.routes"));
 app.use("/api/cart", require("./Routers/cart.routes"));

@@ -50,7 +50,7 @@ const signIn = async (req,res )=>{
 
 const signUp = async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     // Check if email already exists
     const existingUser = await Users.findOne({ email });
@@ -66,7 +66,7 @@ const signUp = async (req, res) => {
       username,
       email,
       password,
-      role: role || "customer", // Default to customer if not passed
+      role:"customer", // Default to customer 
     });
 
     await newUser.save();
