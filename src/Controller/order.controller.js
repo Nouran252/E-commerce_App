@@ -1,5 +1,8 @@
 const Order = require("../Modules/order.module");
 const Cart = require("../Modules/cart.module");
+const sendEmail = require("../emailService");
+const User = require("../Modules/users.module");
+
 
 const createOrder = async (req, res) => {
   try {
@@ -28,6 +31,17 @@ const createOrder = async (req, res) => {
     // Clear cart after placing order
     cart.items = [];
     await cart.save();
+
+
+    // Get user email
+    const user = await User.findById(req.userId);
+
+    // Send email notification
+    await sendEmail(
+      user.email,
+      "Order Confirmation",
+      `Hi ${user.username},\n\nYour order has been placed successfully.\nTotal Amount: $${totalAmount}\n\nThank you for shopping with us!`
+    );
 
     res.status(201).json({
       success: true,
