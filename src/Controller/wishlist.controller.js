@@ -5,10 +5,10 @@ const Product = require("../Modules/product.module");
 const addToWishlist = async (req, res) => {
   try {
     const { productId } = req.body;
-    let wishlist = await Wishlist.findOne({ user: req.userId });
+    let wishlist = await Wishlist.findOne({ userId: req.userId });
 
     if (!wishlist) {
-      wishlist = new Wishlist({ user: req.userId, products: [] });
+      wishlist = new Wishlist({ userId: req.userId, products: [] });
     }
 
     if (wishlist.products.includes(productId)) {
@@ -28,7 +28,7 @@ const addToWishlist = async (req, res) => {
 const removeFromWishlist = async (req, res) => {
   try {
     const { productId } = req.params;
-    const wishlist = await Wishlist.findOne({ user: req.userId });
+    const wishlist = await Wishlist.findOne({ userId: req.userId });
 
     if (!wishlist) {
       return res.status(404).json({ message: "Wishlist not found" });
@@ -46,7 +46,7 @@ const removeFromWishlist = async (req, res) => {
 // Get user's wishlist
 const getMyWishlist = async (req, res) => {
   try {
-    const wishlist = await Wishlist.findOne({ user: req.userId }).populate("products");
+    const wishlist = await Wishlist.findOne({ userId: req.userId }).populate("products");
 
     if (!wishlist) {
       return res.status(404).json({ message: "Wishlist not found" });

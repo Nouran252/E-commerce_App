@@ -17,7 +17,7 @@ const createProduct = async (req, res) => {
 // 2. Get All Products (optionally with search/filter)
 const getAllProducts = async (req, res) => {
     try {
-      const { category, minPrice, maxPrice, minRating, inStock, name } = req.query;
+      const { category, minPrice, maxPrice, minRating, name } = req.query;
   
       const filter = {};
   
@@ -58,7 +58,7 @@ const getAllProducts = async (req, res) => {
 // 3. Get Single Product
 const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.productId);
+    const product = await Product.findById(req.params.id);
     if (!product)
       return res.status(404).json({ success: false, message: "Product not found" });
 
@@ -72,7 +72,7 @@ const getProductById = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const updated = await Product.findByIdAndUpdate(
-      req.params.productId,
+      req.params.id,
       req.body,
       { new: true }
     );
@@ -89,7 +89,7 @@ const updateProduct = async (req, res) => {
 // 5. Delete Product
 const deleteProduct = async (req, res) => {
   try {
-    const deleted = await Product.findByIdAndDelete(req.params.productId);
+    const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted)
       return res.status(404).json({ success: false, message: "Product not found" });
 

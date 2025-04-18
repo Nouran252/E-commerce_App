@@ -4,8 +4,8 @@ const { requireAdmin } = require("../middlewares/auth.middleware");
 const orderController = require("../Controller/order.controller");
 
 // user Routes
-router.post("/", checkUser, orderController.createOrder);
-router.get("/", checkUser, orderController.getMyOrders);
+router.post("/", orderController.createOrder);
+router.get("/", orderController.getMyOrders);
 
 // Admin Routes
 router.get("/all", requireAdmin, orderController.getAllOrders);
